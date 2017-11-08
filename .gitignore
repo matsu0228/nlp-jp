@@ -1,0 +1,6 @@
+!.gitignore
+*.pyc
+__pycache__
+*.log
+*.swp
+venv/pip-selfcheck.json
