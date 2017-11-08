@@ -46,7 +46,7 @@ pip install mecab-python3
 ImportError: libmecab.so.2: cannot open shared object file: No such file or directory
 ```
 - check libraly path and fix it.
-'''
+```
 ldconfig -p | grep 'mecab'
 
 echo '/usr/local/lib' >> ./mylib.conf
