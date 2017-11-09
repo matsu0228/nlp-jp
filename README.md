@@ -55,3 +55,9 @@ sudo ldconfig
 
 ldconfig -p | grep 'mecab'
 ```
+
+- usage: https://github.com/SamuraiT/mecab-python3/blob/master/bindings.html
+
+## NEologd 
+
+- https://github.com/neologd/mecab-ipadic-neologd
