@@ -61,3 +61,12 @@ ldconfig -p | grep 'mecab'
 ## NEologd 
 
 - https://github.com/neologd/mecab-ipadic-neologd
+
+
+## dataset
+
+- set symbolic link in `./dataset`
+
+```
+ln -s /**/data ./dataset
+```

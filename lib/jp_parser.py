@@ -4,8 +4,8 @@
 
 import MeCab
 from collections import namedtuple
-import numpy as np
-import pandas as pd
+# import numpy as np
+# import pandas as pd
 
 
 class JpParser:
@@ -53,7 +53,7 @@ class JpParser:
       token.infl_type   = feature[4]    # 活用型
       token.infl_form   = feature[5]    # 活用形
       token.base_form   = feature[6]    # 原型
-      token.pos         = self.POS_DIC[ feature[0] ] if feature[0] in self.POS_DIC else 'X'  # 品詞
+      token.pos         = self.POS_DIC.get( feature[0], 'X' )     # 品詞
       token.reading     = feature[7] if len(feature) > 7 else ''  # 読み
       token.phonetic    = feature[8] if len(feature) > 8 else ''  # 発音
       yield token
@@ -67,10 +67,10 @@ class JpParser:
 if __name__ == "__main__":
   jp = JpParser( sys_dic_path='/usr/local/lib/mecab/dic/mecab-ipadic-neologd')
   # print( jp.split_into_words() )
-  sent_data = jp.tokenize( "国立新美術館に行った。攻殻機動隊が好きです" ) 
+  sent_data = jp.tokenize( "国立新美術館に行った。攻殻機動隊が好きです") 
   for s in sent_data:
     print(s.surface, s.base_form, s.pos)
-  for n in  jp.filter_by_pos( "国立新美術館に行った。攻殻機動隊が好きです" ): 
+  for n in  jp.filter_by_pos( "国立新美術館に行って、攻殻機動隊の展示をみました" ):
     print('N:', n.surface )
 
 
