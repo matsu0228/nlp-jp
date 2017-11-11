@@ -62,6 +62,27 @@ ldconfig -p | grep 'mecab'
 
 - https://github.com/neologd/mecab-ipadic-neologd
 
+## Cabocha
+
+- CRF++
+```
+ wget "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7QVR6VXJ5dWExSTQ" -O CRF++-0.58.tar.gz
+ $ tar zxfv CRF++-0.58.tar.gz
+ $ cd CRF++-0.58
+ $ ./configure
+ $ make
+ $ sudo make install
+
+```
+- Cabocha
+```
+$ wget "https://googledrive.com/host/0B4y35FiV1wh7cGRCUUJHVTNJRnM/cabocha-0.69.tar.bz2" -O cabocha-0.69.tar.bz2
+$ tar jxvf cabocha-0.69.tar.bz2
+$ cd cabocha-0.69
+$ ./configure --with-charset=utf8
+$ make
+$ sudo make install
+```
 
 ## dataset
 

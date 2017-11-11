@@ -64,4 +64,3 @@ if __name__ == "__main__":
   logger.info(save_file)
   dictionary.save_as_text( save_file )
   # dictionary = corpora.Dictionary.load_from_text('livedoordic.txt')
-
