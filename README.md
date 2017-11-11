@@ -83,6 +83,18 @@ $ ./configure --with-charset=utf8
 $ make
 $ sudo make install
 ```
+- Cabocha for python
+```
+$ cd cabocha-0.69/python
+$ vim setup.py
+def cmd2(str):
+#   return string.split (cmd1(str)) この行を削除
+    return cmd1(str).split() # この行を挿入
+
+$ sudo python setup.py build_ext
+$ sudo python setup.py install
+$ sudo ldconfig
+```
 
 ## dataset
 
