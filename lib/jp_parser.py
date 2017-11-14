@@ -39,6 +39,8 @@ class JpParser:
   def split_into_words(self):
     return self._tagger.parse( self.text )
 
+  # def normalize()
+
   def tokenize(self, sent):
     node = self._tagger.parseToNode( sent )
     while node:
