@@ -4,4 +4,6 @@ __pycache__
 *.log
 *.swp
 dataset
-venv/pip-selfcheck.json
+myvenv/pip-selfcheck.json
+myvenv/lib/config.ini
+
