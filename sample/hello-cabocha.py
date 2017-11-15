@@ -1,60 +1,47 @@
 # -*- coding: utf-8 -*-
 import CaboCha
-import itertools
 
-def chunk_by(func, col):
-  '''
-  `func`の要素が正のアイテムで区切る
-  '''
-  result = []
-  for item in col:
-    if func(item):
-      result.append([])
-    else:
-      result[len(result) - 1].append(item)
-      return result
+class JpParser:
+  def __init__(self):
+    self._parser = CaboCha.Parser('-f4') # f1
 
-def has_chunk(token):
-  '''
-  チャンクがあるかどうか
-  チャンクがある場合、その単語が先頭になる
-  '''
-  return token.chunk is not None
-
-def to_tokens(tree):
-  '''
-  解析済みの木からトークンを取得する
-  '''
-  return [tree.token(i) for i in range(0, tree.size())]
-
-def concat_tokens(i, tokens, lasts):
-  '''
-  単語を意味のある単位にまとめる
-  '''
-  if i == -1:
-    return None
-  word = tokens[i].surface
-  last_words = map(lambda x: x.surface, lasts[i])
-  return word + ''.join(last_words)
-
-raw_string = u'東京のラーメン屋がいつも混雑しているわけではない'
-cp = CaboCha.Parser('-f1')
-tree = cp.parse(raw_string)
-tokens = to_tokens(tree)
-print( tree.chunk )
-head_tokens = filter(has_chunk, tokens)
-print( head_tokens)
-words = map(lambda x: x.surface, head_tokens)
-
-lasts = chunk_by(has_chunk, tokens)
-
-links = map(lambda x: x.chunk.link, head_tokens)
-link_words = map(lambda x: concat_tokens(x, head_tokens, lasts), links)
-
-for (i, to_word) in enumerate(link_words):
-  from_word = concat_tokens(i, head_tokens, lasts)
-  print("{0} => {1}".format(from_word, to_word))
+  def get_token(self, sentence):
+    tree = self._parser.parse(sentence)
+    print('token_size:'+str(tree.token_size()))
+    for i in range(0, tree.token_size()):
+      token = tree.token(i)
+      print('surface:', token.surface)
+      print(token.normalized_surface)
+      print(token.feature)
 
 
+  def get_chunk_data(self, sentence):
+    tree = self._parser.parse(sentence)
+    print('chunk_size:'+str(tree.chunk_size()))
+    print( 'c_link', 'c_hpos', 'c_fpos', 'c_tsize', 'c_fsize')
+    for i in range(0, tree.chunk_size()):
+      chunk = tree.chunk(i)
+      c_link = chunk.link
+      c_hpos = chunk.head_pos
+      c_fpos = chunk.func_pos
+      c_tsize = chunk.token_size
+      c_token_pos = chunk.token_pos
+      c_fsize = chunk.feature_list_size
+      # chunk.score
+      # chunk.additional_info
+      print( c_link, c_hpos, c_fpos, c_tsize, c_fsize)
 
+  def debug(self, sentence):
+    tree = self._parser.parse(sentence)
+    # tree format
+    print(tree.toString(0))
+    # CONLL format
+    print(tree.toString(4))
+
+
+raw_string = u'警察官が自転車で逃げる泥棒を追いかけていた'
+cp = JpParser()
+cp.debug(raw_string)
+cp.get_chunk_data(raw_string)
+cp.get_token(raw_string)
 
