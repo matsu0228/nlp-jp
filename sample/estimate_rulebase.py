@@ -17,6 +17,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+argvs = sys.argv
+target_sentence = ''
+if len(argvs) != 2:
+  logger.error( 'set analysis sentence')
+else:
+  target_sentence = argvs[1]
+
 jp = JpParser( sys_dic_path='/usr/local/lib/mecab/dic/mecab-ipadic-neologd')
 trans = Trans()
 def eval_senti_score(words):
@@ -47,20 +54,24 @@ def senti_analisys(sentence):
 # 5 __SEP__ 職場の義理チョコです
 def search_lines(file_name):
   logger.info(file_name)
-  with open(file_name ) as filedata:
-    lines = filedata.readlines()
-    for line in lines:
-      try:
-        text = line.strip()
-        # text = filedata.read()
-        line_ary = text.split(' __SEP__ ')
-        # logger.info(line_ary)
-        sentence = line_ary[1]
-      except:
-        logger.error(line)
-        continue
-      score = senti_analisys(sentence)
-      print(score, sentence, trans.trans_ja2en(sentence))
+  if target_sentence != '':
+    score = senti_analisys(target_sentence)
+    print(score, target_sentence, trans.trans_ja2en(target_sentence))
+  else:
+    with open(file_name ) as filedata:
+      lines = filedata.readlines()
+      for line in lines:
+        try:
+          text = line.strip()
+          # text = filedata.read()
+          line_ary = text.split(' __SEP__ ')
+          # logger.info(line_ary)
+          sentence = line_ary[1]
+        except:
+          logger.error(line)
+          continue
+        score = senti_analisys(sentence)
+        print(score, sentence, trans.trans_ja2en(sentence))
 
 if __name__ == "__main__":
   start = time.time()
