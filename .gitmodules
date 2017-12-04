@@ -1,0 +1,3 @@
+[submodule "pymongo-example"]
+	path = pymongo-example
+	url = https://github.com/matsu0228/pymongo-example.git
